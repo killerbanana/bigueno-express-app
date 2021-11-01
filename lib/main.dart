@@ -1,10 +1,8 @@
-
 import 'package:biguenoexpress/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/users.dart';
-import 'screens/login/login_screen.dart';
 import 'services/routes.dart';
 import 'services/wrapper.dart';
 
@@ -27,7 +25,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LogInScreen(),
         initialRoute: Wrapper.routeName,
         routes: routes,
       ),

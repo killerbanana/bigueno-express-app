@@ -1,23 +1,26 @@
 import 'package:biguenoexpress/models/products.dart';
-import 'package:get/get.dart';
+import 'package:biguenoexpress/services/remote_services.dart';
+import 'package:get/state_manager.dart';
 
-class ProductController extends GetxController{
-  var product = List<Product>.empty().obs;
+class ProductController extends GetxController {
+  var isLoading = true.obs;
+  var productList = List<Products>().obs;
 
   @override
   void onInit() {
-    super.onInit();
     fetchProducts();
+    super.onInit();
   }
 
   void fetchProducts() async {
-    await Future.delayed(Duration(seconds: 1));
-    var response = [
-      Product(
-
-      )
-    ];
-
-    product.value = response;
+    try {
+      isLoading(true);
+      var products = await RemoteServices.fetchProducts();
+      if (products != null) {
+        productList.value = products;
+      }
+    } finally {
+      isLoading(false);
+    }
   }
 }

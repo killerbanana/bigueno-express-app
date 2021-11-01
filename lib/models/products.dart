@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final product = productFromJson(jsonString);
+//     final products = productsFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:get/state_manager.dart';
+List<Products> productsFromJson(String str) => List<Products>.from(json.decode(str).map((x) => Products.fromJson(x)));
 
-Product productFromJson(String str) => Product.fromJson(json.decode(str));
+String productsToJson(List<Products> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-String productToJson(Product data) => json.encode(data.toJson());
-
-class Product {
-  Product({
+class Products {
+  Products({
     this.productData,
     this.sellerData,
   });
@@ -17,7 +17,7 @@ class Product {
   ProductData productData;
   SellerData sellerData;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory Products.fromJson(Map<String, dynamic> json) => Products(
     productData: ProductData.fromJson(json["product_data"]),
     sellerData: SellerData.fromJson(json["seller_data"]),
   );
@@ -30,41 +30,55 @@ class Product {
 
 class ProductData {
   ProductData({
-    this.category,
     this.condition,
-    this.description,
+    this.image,
+    this.rating,
     this.name,
-    this.price,
-    this.stock,
     this.variation,
+    this.description,
+    this.stock,
+    this.category,
+    this.price,
+    this.id,
   });
 
-  String category;
   String condition;
-  String description;
+  String image;
+  String rating;
   String name;
-  int price;
-  int stock;
   Variation variation;
+  String description;
+  int stock;
+  String category;
+  int price;
+  String id;
 
   factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
-    category: json["category"],
     condition: json["condition"],
-    description: json["description"],
+    image: json["image"],
+    rating: json["rating"],
     name: json["name"],
-    price: json["price"],
-    stock: json["stock"],
     variation: Variation.fromJson(json["variation"]),
+    description: json["description"],
+    stock: json["stock"],
+    category: json["category"],
+    price: json["price"],
+    id: json["id"],
   );
 
+  var isFavorite = false.obs;
+
   Map<String, dynamic> toJson() => {
-    "category": category,
     "condition": condition,
-    "description": description,
+    "image": image,
+    "rating": rating,
     "name": name,
-    "price": price,
-    "stock": stock,
     "variation": variation.toJson(),
+    "description": description,
+    "stock": stock,
+    "category": category,
+    "price": price,
+    "id": id,
   };
 }
 
@@ -106,20 +120,16 @@ class Size {
 
 class SellerData {
   SellerData({
-    this.id,
     this.name,
   });
 
-  String id;
   String name;
 
   factory SellerData.fromJson(Map<String, dynamic> json) => SellerData(
-    id: json["id"],
     name: json["name"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "name": name,
   };
 }

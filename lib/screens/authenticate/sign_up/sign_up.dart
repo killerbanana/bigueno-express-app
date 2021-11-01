@@ -1,5 +1,5 @@
 import 'package:biguenoexpress/components/pallete.dart';
-import 'package:biguenoexpress/screens/login/login_screen.dart';
+import 'package:biguenoexpress/screens/authenticate/login/login_screen.dart';
 import 'package:biguenoexpress/services/auth.dart';
 import 'package:biguenoexpress/widgets/password_inputfield.dart';
 import 'package:biguenoexpress/widgets/rounded_button.dart';
@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUp extends StatefulWidget {
+  static String routeName = "/sign_up";
   @override
   _SignUpState createState() => _SignUpState();
 }

@@ -1,96 +1,84 @@
-import 'package:biguenoexpress/widgets/icon_with_counter.dart';
+import 'package:biguenoexpress/controllers/product_controller.dart';
+import 'package:biguenoexpress/models/product_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
-class HomeScreen extends StatelessWidget {
-
+class HomePage extends StatelessWidget {
+  final ProductController productController = Get.put(ProductController());
+  static String routeName = "/homepage";
   @override
   Widget build(BuildContext context) {
-    Size size =  MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Drawer(),
       appBar: AppBar(
         elevation: 0,
-          actions: <Widget>[
-            IconWithCounter(icon: CupertinoIcons.mail, numOfItem: 1, press: () {},),
-            IconWithCounter(icon: CupertinoIcons.shopping_cart, numOfItem: 5, press: () {},),
-          ],
-        centerTitle: false,
-        title: GestureDetector(
-          onTap: () {
-          },
-          child: Container(
-            width: double.infinity,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(6.5),
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.search,
-                      color: Colors.black,
-                    ),
-                    Text(
-                        'Search...'
-                    )
-                  ],
-                ),
-              ),
+        title: Text('Food Delivery',style: TextStyle(
+            fontFamily: 'avenir',
+            fontSize: 20,
+            fontWeight: FontWeight.w900),),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              CupertinoIcons.cart,
             ),
-          ),
-        )
-      ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                width: double.infinity,
-                child: Center(child: Text('DELICIOUS FOOD AT YOUR DOORSTEP', style: TextStyle(color: Colors.white, fontSize: size.height * 0.020),)),
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
-                  color: Colors.blue,
-                ),
-              ),
-              Padding(padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  height: 85,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, counter){
-                      return Container(
-                        width: size.width * 0.28,
-                        child: Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(8),
-                            onTap: (){},
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(CupertinoIcons.house_alt),
-                                  Text('Marketplace')
-                                ],
-                              ),
-                              height: 68,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              )
-            ],
+            onPressed: () {},
           )
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            CupertinoSearchTextField(
+              placeholder: 'Search for shops and restaurant',
+              onChanged: (String value) {
+                print('The text has changed to: $value');
+              },
+              onSubmitted: (String value) {
+                print('Submitted text: $value');
+              },
+            ),
+            Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Your Daily deals',
+                      style: TextStyle(
+                          fontFamily: 'avenir',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.view_list_rounded), onPressed: () {
+
+                  }),
+                  IconButton(icon: Icon(Icons.grid_view), onPressed: () {}),
+                ],
+            ),
+            Expanded(
+              child: Obx(() {
+                if (productController.isLoading.value)
+                  return Center(child: CupertinoActivityIndicator());
+                else
+                  return StaggeredGridView.countBuilder(
+                    crossAxisCount: 2,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: productController.productList.length,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    itemBuilder: (context, index) {
+                      return ProductTile(productController.productList[index]);
+                    },
+                    staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                  );
+              }),
+            )
+          ],
+        ),
       ),
     );
   }

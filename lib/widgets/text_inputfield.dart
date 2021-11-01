@@ -6,8 +6,8 @@ class TextInputField extends StatelessWidget {
     Key key,
     @required this.icon,
     @required this.hint,
-    this.inputType,
-    this.inputAction, this.color, this.iconColor,
+    @required this.inputType,
+    @required this.inputAction, @required this.color, @required this.iconColor,
   }) : super(key: key);
 
   final IconData icon;

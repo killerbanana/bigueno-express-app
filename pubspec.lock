@@ -174,6 +174,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -197,7 +204,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.8"
+    version: "4.1.4"
   google_fonts:
     dependency: "direct main"
     description:
@@ -331,6 +338,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.1"
+  scrollable_list_tabview:
+    dependency: "direct main"
+    description:
+      name: scrollable_list_tabview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.6"
+  scrollable_positioned_list:
+    dependency: transitive
+    description:
+      name: scrollable_positioned_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.10"
   sky_engine:
     dependency: transitive
     description: flutter

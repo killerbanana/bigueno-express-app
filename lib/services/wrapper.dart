@@ -1,7 +1,8 @@
 import 'package:biguenoexpress/models/users.dart';
-import 'package:biguenoexpress/screens/add_product/add_product.dart';
+import 'package:biguenoexpress/screens/authenticate/login/login_screen.dart';
+import 'package:biguenoexpress/screens/food_delivery_screen/food_delivery_screen.dart';
+import 'package:biguenoexpress/screens/food_delivery_screen/food_delivery_seller_screen.dart';
 import 'package:biguenoexpress/screens/home/home_screen.dart';
-import 'package:biguenoexpress/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class Wrapper extends StatelessWidget {
       return LogInScreen();
     }
     else{
-      return AddProduct();
+      return FoodDeliverySellerScreen();
     }
   }
 }
